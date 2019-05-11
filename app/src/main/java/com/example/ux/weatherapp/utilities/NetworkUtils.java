@@ -19,6 +19,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.ux.weatherapp.R;
 import com.example.ux.weatherapp.data.SunshinePreferences;
 
 import java.io.IOException;
@@ -54,7 +55,10 @@ public final class NetworkUtils {
     private static final String STATIC_WEATHER_URL =
             "https://andfun-weather.udacity.com/staticweather";
 
-    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+    private static final String OPEN_WEATHER_API_URL =
+            "https://api.openweathermap.org/data/2.5/forecast?";
+
+    private static final String FORECAST_BASE_URL = DYNAMIC_WEATHER_URL;
 
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
@@ -73,6 +77,13 @@ public final class NetworkUtils {
     /* The query parameter allows us to provide a location string to the API */
     private static final String QUERY_PARAM = "q";
 
+    /* The query parameter for city id */
+    private static final String CITY_ID_PARAM = "id";
+
+    /* The query parameter for api key */
+    private static final String API_KEY_PARAM = "appid";
+
+
     private static final String LAT_PARAM = "lat";
     private static final String LON_PARAM = "lon";
 
@@ -82,6 +93,8 @@ public final class NetworkUtils {
     private static final String UNITS_PARAM = "units";
     /* The days parameter allows us to designate how many days of weather data we want */
     private static final String DAYS_PARAM = "cnt";
+
+    private static final String API_KEY = "337e05a2d670323162bb0570b3aea62f";
 
     /**
      * Retrieves the proper URL to query for the weather data. The reason for both this method as
@@ -98,7 +111,7 @@ public final class NetworkUtils {
      * @return URL to query weather service
      */
     public static URL getUrl(Context context) {
-        if (SunshinePreferences.isLocationLatLonAvailable(context)) {
+        /*if (SunshinePreferences.isLocationLatLonAvailable(context)) {
             double[] preferredCoordinates = SunshinePreferences.getLocationCoordinates(context);
             double latitude = preferredCoordinates[0];
             double longitude = preferredCoordinates[1];
@@ -106,7 +119,8 @@ public final class NetworkUtils {
         } else {
             String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
             return buildUrlWithLocationQuery(locationQuery);
-        }
+        }*/
+        return buildUrlWithOpenWeatherApiQuery("2352776");
     }
 
     /**
@@ -149,6 +163,31 @@ public final class NetworkUtils {
                 .appendQueryParameter(FORMAT_PARAM, format)
                 .appendQueryParameter(UNITS_PARAM, units)
                 .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .build();
+
+        try {
+            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + weatherQueryUrl);
+            return weatherQueryUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Builds the URL used to talk to the weather server using a location. This location is based
+     * on the query capabilities of the weather provider that we are using.
+     *
+     * @param cityId The location that will be queried for.
+     * @return The URL to use to query the weather server.
+     */
+    private static URL buildUrlWithOpenWeatherApiQuery(String cityId) {
+        Uri weatherQueryUri = Uri.parse(OPEN_WEATHER_API_URL).buildUpon()
+                .appendQueryParameter(CITY_ID_PARAM, cityId)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY)
+                .appendQueryParameter(FORMAT_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
                 .build();
 
         try {

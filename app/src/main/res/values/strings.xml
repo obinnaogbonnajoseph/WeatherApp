@@ -104,6 +104,11 @@
 
     <string name="pref_last_notification">last_notification</string>
 
+    <!-- - - - - - - - - - - - - - -
+                - API KEY -
+     - - - - - - - - - - - - - - - -->
+     <string name="api_key">337e05a2d670323162bb0570b3aea62f</string>
+
 
 
     <!-- - - - - - - - - - - - - - -
