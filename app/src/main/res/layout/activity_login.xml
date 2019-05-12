@@ -10,6 +10,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ux.weatherapp.LoginActivity">
 
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="283dp"
+        android:layout_height="119dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/apple_lg" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:text="@string/apple_name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -19,10 +40,11 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+    <!--<ScrollView-->
+        <!--android:id="@+id/login_form"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="248dp">-->
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -32,7 +54,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -64,33 +87,64 @@
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="16dp"
-                android:id="@+id/buttons">
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/email_sign_in_button"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
-                <Button
-                    android:id="@+id/google_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="4dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/action_google_sign_in"
+                    android:text="@string/account_login"
                     android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/email_sign_up_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/button_sign_up"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
+            <!--<LinearLayout-->
+                <!--android:id="@+id/textQ"-->
+                <!--android:layout_width="320dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="2dp">-->
 
+
+                <!--<TextView-->
+                    <!--android:id="@+id/link_signUp"-->
+                    <!--android:layout_width="175dp"-->
+                    <!--android:layout_height="36dp"-->
+                    <!--android:layout_marginBottom="24dp"-->
+                    <!--android:layout_weight="1dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/account_prompt"-->
+                    <!--android:textSize="16sp" />-->
+
+                <!--<Button-->
+                <!--android:id="@+id/button_send"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/button_sign_up"-->
+                <!--android:onClick="signUp"-->
+                <!--style="?android:attr/borderlessButtonStyle" />-->
+
+            <!--</LinearLayout>-->
 
         </LinearLayout>
-    </ScrollView>
+
+
+    <!--</ScrollView>-->
 </LinearLayout>
