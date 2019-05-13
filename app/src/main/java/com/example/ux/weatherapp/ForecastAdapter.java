@@ -19,6 +19,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,6 +169,9 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
          /* Display friendly date string */
         forecastAdapterViewHolder.dateView.setText(dateString);
 
+        /* Display current location */
+        if(viewType == VIEW_TYPE_TODAY) forecastAdapterViewHolder.locationView.setText("Abuja");
+
         /***********************
          * Weather Description *
          ***********************/
@@ -268,6 +272,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         final ImageView iconView;
 
         final TextView dateView;
+        final TextView locationView;
         final TextView descriptionView;
         final TextView highTempView;
         final TextView lowTempView;
@@ -275,11 +280,12 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         ForecastAdapterViewHolder(View view) {
             super(view);
 
-            iconView = (ImageView) view.findViewById(R.id.weather_icon);
-            dateView = (TextView) view.findViewById(R.id.date);
-            descriptionView = (TextView) view.findViewById(R.id.weather_description);
-            highTempView = (TextView) view.findViewById(R.id.high_temperature);
-            lowTempView = (TextView) view.findViewById(R.id.low_temperature);
+            iconView = view.findViewById(R.id.weather_icon);
+            dateView = view.findViewById(R.id.date);
+            locationView = view.findViewById(R.id.location);
+            descriptionView = view.findViewById(R.id.weather_description);
+            highTempView = view.findViewById(R.id.high_temperature);
+            lowTempView = view.findViewById(R.id.low_temperature);
 
             view.setOnClickListener(this);
         }

@@ -26,6 +26,7 @@ import com.example.ux.weatherapp.data.WeatherContract;
 import com.example.ux.weatherapp.utilities.NetworkUtils;
 import com.example.ux.weatherapp.utilities.OpenWeatherJsonUtils;
 import com.example.ux.weatherapp.utilities.NotificationUtils;
+import com.example.ux.weatherapp.utilities.OpenWeatherMapJsonUtils;
 
 import java.net.URL;
 
@@ -53,7 +54,7 @@ public class SunshineSyncTask {
             String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherRequestUrl);
 
             /* Parse the JSON into a list of weather values */
-            ContentValues[] weatherValues = OpenWeatherJsonUtils
+            ContentValues[] weatherValues = OpenWeatherMapJsonUtils
                     .getWeatherContentValuesFromJson(context, jsonWeatherResponse);
 
             /*

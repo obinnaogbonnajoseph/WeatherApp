@@ -17,11 +17,14 @@ package com.example.ux.weatherapp.utilities;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 
 import com.example.ux.weatherapp.R;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -201,6 +204,8 @@ public final class SunshineDateUtils {
      */
     public static String getFriendlyDateString(Context context, long normalizedUtcMidnight, boolean showFullDate) {
 
+        DateFormat df = new SimpleDateFormat("dd:MM:yy:HH:mm:ss");
+
         /*
          * NOTE: localDate should be localDateMidnightMillis and should be straight from the
          * database
@@ -210,6 +215,7 @@ public final class SunshineDateUtils {
          * zone at midnight.
          */
         long localDate = getLocalMidnightFromNormalizedUtcDate(normalizedUtcMidnight);
+        Log.d("local date: ", df.format(new Date(localDate)));
 
         /*
          * In order to determine which day of the week we are creating a date string for, we need
@@ -217,37 +223,18 @@ public final class SunshineDateUtils {
          * 00:00 GMT)
          */
         long daysFromEpochToProvidedDate = elapsedDaysSinceEpoch(localDate);
+        Log.d("daysFromETPDate: ", daysFromEpochToProvidedDate+"");
 
         /*
          * As a basis for comparison, we use the number of days that have passed from the epoch
          * until today.
          */
-        long daysFromEpochToToday = elapsedDaysSinceEpoch(System.currentTimeMillis());
+        long daysFromEpochToToday = elapsedDaysSinceEpoch(getLocalMidnightFromNormalizedUtcDate(getNormalizedUtcDateForToday()));
+        Log.d("daysFromETToday: ", daysFromEpochToToday+"");
 
-        if (daysFromEpochToProvidedDate == daysFromEpochToToday || showFullDate) {
-            /*
-             * If the date we're building the String for is today's date, the format
-             * is "Today, June 24"
-             */
-            String dayName = getDayName(context, localDate);
-            String readableDate = getReadableDateString(context, localDate);
-            if (daysFromEpochToProvidedDate - daysFromEpochToToday < 2) {
-                /*
-                 * Since there is no localized format that returns "Today" or "Tomorrow" in the API
-                 * levels we have to support, we take the name of the day (from SimpleDateFormat)
-                 * and use it to replace the date from DateUtils. This isn't guaranteed to work,
-                 * but our testing so far has been conclusively positive.
-                 *
-                 * For information on a simpler API to use (on API > 18), please check out the
-                 * documentation on DateFormat#getBestDateTimePattern(Locale, String)
-                 * https://developer.android.com/reference/android/text/format/DateFormat.html#getBestDateTimePattern
-                 */
-                String localizedDayName = new SimpleDateFormat("EEEE").format(localDate);
-                return readableDate.replace(localizedDayName, dayName);
-            } else {
-                return readableDate;
-            }
-        } else if (daysFromEpochToProvidedDate < daysFromEpochToToday + 7) {
+        if (daysFromEpochToProvidedDate == daysFromEpochToToday) {
+            return getReadableDateString(context, localDate);
+        }else if (daysFromEpochToProvidedDate < daysFromEpochToToday + 7) {
             /* If the input date is less than a week in the future, just return the day name. */
             return getDayName(context, localDate);
         } else {
@@ -292,7 +279,7 @@ public final class SunshineDateUtils {
          * day name.
          */
         long daysFromEpochToProvidedDate = elapsedDaysSinceEpoch(dateInMillis);
-        long daysFromEpochToToday = elapsedDaysSinceEpoch(System.currentTimeMillis());
+        long daysFromEpochToToday = elapsedDaysSinceEpoch(getLocalMidnightFromNormalizedUtcDate(getNormalizedUtcDateForToday()));
 
         int daysAfterToday = (int) (daysFromEpochToProvidedDate - daysFromEpochToToday);
 
