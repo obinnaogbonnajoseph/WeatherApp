@@ -30,6 +30,7 @@ public final class SunshinePreferences {
      */
     public static final String PREF_COORD_LAT = "coord_lat";
     public static final String PREF_COORD_LONG = "coord_long";
+    public static final String PREF_CITY_ID = "city_id";
 
     /**
      * Helper method to handle setting location details in Preferences (city name, latitude,
@@ -47,6 +48,15 @@ public final class SunshinePreferences {
 
         editor.putLong(PREF_COORD_LAT, Double.doubleToRawLongBits(lat));
         editor.putLong(PREF_COORD_LONG, Double.doubleToRawLongBits(lon));
+        editor.apply();
+    }
+
+    public static void setPrefCityId(Context context, String cityId, String cityName) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString(context.getString(R.string.pref_location_key), cityId);
+        editor.putString(context.getString(R.string.pref_location_name), cityName);
         editor.apply();
     }
 
@@ -81,6 +91,15 @@ public final class SunshinePreferences {
         String defaultLocation = context.getString(R.string.pref_location_default);
 
         return sp.getString(keyForLocation, defaultLocation);
+    }
+
+    public static String getPreferredWeatherLocationName(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String keyForLocationName = context.getString(R.string.pref_location_name);
+        String defaultLocationName = context.getString(R.string.pref_location_default_name);
+
+        return sp.getString(keyForLocationName, defaultLocationName);
     }
 
     /**

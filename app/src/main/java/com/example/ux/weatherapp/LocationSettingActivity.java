@@ -1,5 +1,6 @@
 package com.example.ux.weatherapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LocationSettingActivity extends AppCompatActivity implements
@@ -76,8 +78,11 @@ public class LocationSettingActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onClick(String cityId) {
-
+    public void onClick(String cityId, String cityName) {
+        SunshinePreferences.setPrefCityId(this, cityId, cityName);
+        SunshineSyncUtils.startImmediateSync(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void loadCities() {
@@ -115,6 +120,7 @@ public class LocationSettingActivity extends AppCompatActivity implements
             protected void onPostExecute(List<City> cityList) {
                 super.onPostExecute(cityList);
                 cities.addAll(cityList);
+                Collections.sort(cities, (d1, d2) -> d1.getName().compareTo(d2.getName()));
                 mSearchAdapter.notifyDataSetChanged();
                 showCityView();
             }

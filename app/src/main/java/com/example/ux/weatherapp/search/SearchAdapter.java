@@ -37,7 +37,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
      * The interface that receives onClick messages.
      */
     public interface SearchAdapterOnClickHandler {
-        void onClick(String cityId);
+        void onClick(String cityId, String cityName);
     }
 
 
@@ -105,7 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
             int adapterPosition = getAdapterPosition();
             City city = mCities.get(adapterPosition);
             String cityId = city.getId()+"";
-            mClickHandler.onClick(cityId);
+            mClickHandler.onClick(cityId, city.getName());
         }
     }
 }
