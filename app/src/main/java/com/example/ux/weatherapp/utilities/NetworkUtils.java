@@ -111,15 +111,6 @@ public final class NetworkUtils {
      * @return URL to query weather service
      */
     public static URL getUrl(Context context) {
-        /*if (SunshinePreferences.isLocationLatLonAvailable(context)) {
-            double[] preferredCoordinates = SunshinePreferences.getLocationCoordinates(context);
-            double latitude = preferredCoordinates[0];
-            double longitude = preferredCoordinates[1];
-            return buildUrlWithLatitudeLongitude(latitude, longitude);
-        } else {
-            String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
-            return buildUrlWithLocationQuery(locationQuery);
-        }*/
         String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
         return buildUrlWithOpenWeatherApiQuery(locationQuery);
     }

@@ -102,7 +102,7 @@ public class SunshineSyncTask {
                  * We only want to show the notification if the user wants them shown and we
                  * haven't shown a notification in the past day.
                  */
-                if (notificationsEnabled && oneDayPassedSinceLastNotification) {
+                if (notificationsEnabled) {
                     NotificationUtils.notifyUserOfNewWeather(context);
                 }
 

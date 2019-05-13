@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ux.weatherapp.data.SunshinePreferences;
 import com.example.ux.weatherapp.utilities.SunshineDateUtils;
 import com.example.ux.weatherapp.utilities.SunshineWeatherUtils;
 
@@ -170,7 +171,10 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         forecastAdapterViewHolder.dateView.setText(dateString);
 
         /* Display current location */
-        if(viewType == VIEW_TYPE_TODAY) forecastAdapterViewHolder.locationView.setText("Abuja");
+        if(viewType == VIEW_TYPE_TODAY) {
+            String cityName = SunshinePreferences.getPreferredWeatherLocationName(mContext);
+            forecastAdapterViewHolder.locationView.setText(cityName);
+        }
 
         /***********************
          * Weather Description *

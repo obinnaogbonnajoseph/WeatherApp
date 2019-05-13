@@ -74,8 +74,14 @@
     <!-- Key name for storing location in SharedPreferences -->
     <string name="pref_location_key" translatable="false">location</string>
 
-    <!-- Default postal code for location preference -->
+    <!-- Key name for storing location name in SharedPreferences -->
+    <string name="pref_location_name" translatable="false">location_name</string>
+
+    <!-- Default code for location preference -->
     <string name="pref_location_default" translatable="false">2352776</string>
+
+    <!-- Default code for location preference -->
+    <string name="pref_location_default_name" translatable="false">Abuja</string>
 
     <!-- Label for the temperature units preference -->
     <string name="pref_units_label">Temperature Units</string>
