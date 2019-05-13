@@ -1,34 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-     Copyright (C) 2016 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
 
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  - This file contains all of the strings used throughout Sunshine. They can be accessed       -
-  - through calls to Context#getString. This strings are organized by where they are used in   -
-  - Sunshine.                                                                                  -
-  -                                                                                            -
-  - Throughout this file, you will see <xliff:g> tags. These help any potential translators    -
-  - properly translate your strings and also give developers that are looking at your strings  -
-  - an idea of exactly how they are used.                                                      -
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-
-
-    <!-- - - - - - - - - - - - - -
-      - Used throughout Sunshine -
-      - - - - - - - - - - - - - -->
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       - Used in Action Bar and in AndroidManifest to tell the device the name of this app. It's  -
@@ -38,11 +11,6 @@
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <string name="app_name">Apple Weather</string>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      - By convention, "action" denotes that this String will be used as the label for an        -
-      - Action, typically from the action bar.  The ActionBar is limited real estate, so         -
-      - shorter is better.                                                                       -
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <string name="action_map">Map Location</string>
     <!-- Used to share the weather forecast on a given day from the DetailActivity -->
     <string name="action_share">Share</string>
@@ -251,7 +219,7 @@
     </string>
 
 
-    <!-- Strings related to login -->
+    <!-- Strings related to login and signup-->
     <string name="account_prompt">Dont have an account?</string>
     <string name="account_prompt1">Already have an account?</string>
     <string name="account_create">Create Account</string>
