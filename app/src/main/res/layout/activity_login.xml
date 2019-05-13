@@ -26,6 +26,7 @@
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
         android:text="@string/apple_name"
+        android:fontFamily="@font/raleway_bold"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
