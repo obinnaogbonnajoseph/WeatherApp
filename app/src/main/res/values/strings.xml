@@ -36,7 +36,7 @@
       - In the History of Mankind", your launcher icon isn't displayed with "The greatest Wea"   -
       - or something similar.                                                                    -
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <string name="app_name">Weather App</string>
+    <string name="app_name">Apple Weather</string>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       - By convention, "action" denotes that this String will be used as the label for an        -
