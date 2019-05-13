@@ -61,6 +61,7 @@ public final class SunshinePreferences {
 
         editor.remove(PREF_COORD_LAT);
         editor.remove(PREF_COORD_LONG);
+        editor.putString(context.getString(R.string.pref_location_key), "2352776");
         editor.apply();
     }
 

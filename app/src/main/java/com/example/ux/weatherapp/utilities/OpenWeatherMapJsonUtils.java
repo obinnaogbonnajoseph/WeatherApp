@@ -124,7 +124,7 @@ public final class OpenWeatherMapJsonUtils {
              * We ignore all the datetime values embedded in the JSON and assume that
              * the values are returned in-order by day (which is not guaranteed to be correct).
              */
-            dateTimeMillis = normalizedUtcStartDay + (TimeUnit.DAYS.toMillis(SunshineDateUtils.DAY_IN_MILLIS * dayNumber));
+            dateTimeMillis = normalizedUtcStartDay + SunshineDateUtils.DAY_IN_MILLIS * dayNumber;
 
             // Returned object:
             // dt: long

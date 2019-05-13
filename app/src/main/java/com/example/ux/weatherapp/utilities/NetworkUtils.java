@@ -120,7 +120,8 @@ public final class NetworkUtils {
             String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
             return buildUrlWithLocationQuery(locationQuery);
         }*/
-        return buildUrlWithOpenWeatherApiQuery("2352776");
+        String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
+        return buildUrlWithOpenWeatherApiQuery(locationQuery);
     }
 
     /**

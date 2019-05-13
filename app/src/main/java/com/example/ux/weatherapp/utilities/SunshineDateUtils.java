@@ -229,21 +229,12 @@ public final class SunshineDateUtils {
          * As a basis for comparison, we use the number of days that have passed from the epoch
          * until today.
          */
-        long daysFromEpochToToday = elapsedDaysSinceEpoch(System.currentTimeMillis());
+        long daysFromEpochToToday = elapsedDaysSinceEpoch(getLocalMidnightFromNormalizedUtcDate(getNormalizedUtcDateForToday()));
         Log.d("daysFromETToday: ", daysFromEpochToToday+"");
 
-        if (daysFromEpochToProvidedDate <= daysFromEpochToToday || showFullDate) {
-            /*
-             * If the date we're building the String for is today's date, the format
-             * is "Today, June 24"
-             */
-            return getDayName(context, localDate);
-        } else if (daysFromEpochToProvidedDate - daysFromEpochToToday < 2) {
-            String dayName = getDayName(context, localDate);
-            String readableDate = getReadableDateString(context, localDate);
-            String localizedDayName = new SimpleDateFormat("EEEE").format(localDate);
-            return readableDate.replace(localizedDayName, dayName);
-        } else if (daysFromEpochToProvidedDate < daysFromEpochToToday + 7) {
+        if (daysFromEpochToProvidedDate == daysFromEpochToToday) {
+            return getReadableDateString(context, localDate);
+        }else if (daysFromEpochToProvidedDate < daysFromEpochToToday + 7) {
             /* If the input date is less than a week in the future, just return the day name. */
             return getDayName(context, localDate);
         } else {
@@ -288,14 +279,14 @@ public final class SunshineDateUtils {
          * day name.
          */
         long daysFromEpochToProvidedDate = elapsedDaysSinceEpoch(dateInMillis);
-        long daysFromEpochToToday = elapsedDaysSinceEpoch(System.currentTimeMillis());
+        long daysFromEpochToToday = elapsedDaysSinceEpoch(getLocalMidnightFromNormalizedUtcDate(getNormalizedUtcDateForToday()));
 
         int daysAfterToday = (int) (daysFromEpochToProvidedDate - daysFromEpochToToday);
 
         switch (daysAfterToday) {
-            case -1:
-                return context.getString(R.string.today);
             case 0:
+                return context.getString(R.string.today);
+            case 1:
                 return context.getString(R.string.tomorrow);
 
             default:

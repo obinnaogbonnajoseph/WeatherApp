@@ -169,6 +169,9 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
          /* Display friendly date string */
         forecastAdapterViewHolder.dateView.setText(dateString);
 
+        /* Display current location */
+        if(viewType == VIEW_TYPE_TODAY) forecastAdapterViewHolder.locationView.setText("Abuja");
+
         /***********************
          * Weather Description *
          ***********************/
@@ -269,6 +272,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         final ImageView iconView;
 
         final TextView dateView;
+        final TextView locationView;
         final TextView descriptionView;
         final TextView highTempView;
         final TextView lowTempView;
@@ -278,6 +282,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
 
             iconView = view.findViewById(R.id.weather_icon);
             dateView = view.findViewById(R.id.date);
+            locationView = view.findViewById(R.id.location);
             descriptionView = view.findViewById(R.id.weather_description);
             highTempView = view.findViewById(R.id.high_temperature);
             lowTempView = view.findViewById(R.id.low_temperature);
