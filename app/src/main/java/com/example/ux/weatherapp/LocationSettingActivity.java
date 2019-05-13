@@ -3,11 +3,14 @@ package com.example.ux.weatherapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -25,12 +28,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LocationSettingActivity extends AppCompatActivity implements
-        SharedPreferences.OnSharedPreferenceChangeListener, SearchAdapter.SearchAdapterOnClickHandler {
+        SharedPreferences.OnSharedPreferenceChangeListener, SearchAdapter.SearchAdapterOnClickHandler,
+        SearchView.OnQueryTextListener{
 
     private RecyclerView mRecyclerView;
     private ProgressBar mLoadingIndicator;
+    private SearchView mSearchView;
     private List<City> cities = new ArrayList<>();
     private SearchAdapter mSearchAdapter;
 
@@ -42,6 +48,15 @@ public class LocationSettingActivity extends AppCompatActivity implements
         mRecyclerView = findViewById(R.id.recyclerview_city);
 
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator_city);
+
+        mSearchView = findViewById(R.id.search_view);
+
+        mSearchView.setOnQueryTextListener(this);
+
+        mSearchView.setOnCloseListener(() -> {
+            loadCities();
+            return false;
+        });
 
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -154,5 +169,23 @@ public class LocationSettingActivity extends AppCompatActivity implements
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         /* Finally, make sure the weather data is visible */
         mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+       List<City> newCities =  cities.stream().filter(city -> city.getName().toLowerCase()
+               .contains(s.trim().toLowerCase()))
+                .collect(Collectors.toList());
+       cities.clear();
+       cities.addAll(newCities);
+       mSearchAdapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
     }
 }
