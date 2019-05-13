@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!",
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum of 6 characters!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -78,7 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(),
+                                Toast.makeText(SignUpActivity.this, "Account created successfully" + task.isSuccessful(),
                                         Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
 
