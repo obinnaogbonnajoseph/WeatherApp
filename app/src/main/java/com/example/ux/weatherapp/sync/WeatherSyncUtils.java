@@ -32,7 +32,7 @@ import com.firebase.jobdispatcher.Trigger;
 
 import java.util.concurrent.TimeUnit;
 
-public class SunshineSyncUtils {
+public class WeatherSyncUtils {
 
     /*
      * Interval at which to sync with the weather. Use TimeUnit for convenience, rather than
@@ -44,10 +44,10 @@ public class SunshineSyncUtils {
 
     private static boolean sInitialized;
 
-    private static final String SUNSHINE_SYNC_TAG = "sunshine-sync";
+    private static final String WEATHER_SYNC_TAG = "weather-sync";
 
     /**
-     * Schedules a repeating sync of Sunshine's weather data using FirebaseJobDispatcher.
+     * Schedules a repeating sync of weather data using FirebaseJobDispatcher.
      * @param context Context used to create the GooglePlayDriver that powers the
      *                FirebaseJobDispatcher
      */
@@ -56,12 +56,12 @@ public class SunshineSyncUtils {
         Driver driver = new GooglePlayDriver(context);
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
 
-        /* Create the Job to periodically sync Sunshine */
-        Job syncSunshineJob = dispatcher.newJobBuilder()
-                /* The Service that will be used to sync Sunshine's data */
-                .setService(SunshineFirebaseJobService.class)
+        /* Create the Job to periodically sync Weather app*/
+        Job syncJob = dispatcher.newJobBuilder()
+                /* The Service that will be used to sync Weather's data */
+                .setService(WeatherFirebaseJobService.class)
                 /* Set the UNIQUE tag used to identify this Job */
-                .setTag(SUNSHINE_SYNC_TAG)
+                .setTag(WEATHER_SYNC_TAG)
                 /*
                  * Network constraints on which this Job should run. We choose to run on any
                  * network, but you can also choose to run only on un-metered networks or when the
@@ -75,11 +75,11 @@ public class SunshineSyncUtils {
                  */
                 .setLifetime(Lifetime.FOREVER)
                 /*
-                 * We want Sunshine's weather data to stay up to date, so we tell this Job to recur.
+                 * We want weather data to stay up to date, so we tell this Job to recur.
                  */
                 .setRecurring(true)
                 /*
-                 * We want the weather data to be synced every 3 to 4 hours. The first argument for
+                 * We want the weather data to be synced every 5 mins. The first argument for
                  * Trigger's static executionWindow method is the start of the time frame when the
                  * sync should be performed. The second argument is the latest point in time at
                  * which the data should be synced. Please note that this end time is not
@@ -97,7 +97,7 @@ public class SunshineSyncUtils {
                 .build();
 
         /* Schedule the Job with the dispatcher */
-        dispatcher.schedule(syncSunshineJob);
+        dispatcher.schedule(syncJob);
     }
     /**
      * Creates periodic sync tasks and checks to see if an immediate sync is required. If an
@@ -117,7 +117,7 @@ public class SunshineSyncUtils {
         sInitialized = true;
 
         /*
-         * This method call triggers Sunshine to create its task to synchronize weather data
+         * This method call triggers Weather App to create its task to synchronize weather data
          * periodically.
          */
         scheduleFirebaseJobDispatcherSync(context);
@@ -186,7 +186,7 @@ public class SunshineSyncUtils {
      * @param context The Context used to start the IntentService for the sync.
      */
     public static void startImmediateSync(@NonNull final Context context) {
-        Intent intentToSyncImmediately = new Intent(context, SunshineSyncIntentService.class);
+        Intent intentToSyncImmediately = new Intent(context, WeatherSyncIntentService.class);
         context.startService(intentToSyncImmediately);
     }
 }

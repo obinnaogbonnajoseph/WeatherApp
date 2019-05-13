@@ -18,7 +18,7 @@ package com.example.ux.weatherapp.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.example.ux.weatherapp.utilities.SunshineDateUtils;
+import com.example.ux.weatherapp.utilities.WeatherDateUtils;
 
 
 /**
@@ -37,23 +37,13 @@ public class WeatherContract {
 
     /*
      * Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
-     * the content provider for Sunshine.
+     * the content provider for weather app.
      */
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     /*
-     * Possible paths that can be appended to BASE_CONTENT_URI to form valid URI's that Sunshine
+     * Possible paths that can be appended to BASE_CONTENT_URI to form valid URI's that Weather App
      * can handle. For instance,
-     *
-     *     content://com.example.android.sunshine/weather/
-     *     [           BASE_CONTENT_URI         ][ PATH_WEATHER ]
-     *
-     * is a valid path for looking at weather data.
-     *
-     *      content://com.example.android.sunshine/givemeroot/
-     *
-     * will fail, as the ContentProvider hasn't been given any information on what to do with
-     * "givemeroot". At least, let's hope not. Don't be that dev, reader. Don't be that dev.
      */
     public static final String PATH_WEATHER = "weather";
 
@@ -132,7 +122,7 @@ public class WeatherContract {
          * @return The selection part of the weather query for today onwards
          */
         public static String getSqlSelectForTodayOnwards() {
-            long normalizedUtcNow = SunshineDateUtils.normalizeDate(System.currentTimeMillis());
+            long normalizedUtcNow = WeatherDateUtils.normalizeDate(System.currentTimeMillis());
             return WeatherContract.WeatherEntry.COLUMN_DATE + " >= " + normalizedUtcNow;
         }
     }

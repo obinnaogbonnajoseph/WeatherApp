@@ -31,17 +31,13 @@ import android.view.MenuItem;
 
 import com.example.ux.weatherapp.data.WeatherContract;
 import com.example.ux.weatherapp.databinding.ActivityDetailBinding;
-import com.example.ux.weatherapp.utilities.SunshineDateUtils;
-import com.example.ux.weatherapp.utilities.SunshineWeatherUtils;
+import com.example.ux.weatherapp.utilities.WeatherDateUtils;
+import com.example.ux.weatherapp.utilities.WeatherUtils;
 
 public class DetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    /*
-     * In this Activity, you can share the selected day's forecast. No social sharing is complete
-     * without using a hashtag. #BeTogetherNotTheSame
-     */
-    private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
+    private static final String FORECAST_SHARE_HASHTAG = " #AppleWeather";
 
     /*
      * The columns of data that we are interested in displaying within our DetailActivity's
@@ -72,13 +68,7 @@ public class DetailActivity extends AppCompatActivity implements
     public static final int INDEX_WEATHER_DEGREES = 6;
     public static final int INDEX_WEATHER_CONDITION_ID = 7;
 
-    /*
-     * This ID will be used to identify the Loader responsible for loading the weather details
-     * for a particular day. In some cases, one Activity can deal with many Loaders. However, in
-     * our case, there is only one. We will still use this ID to initialize the loader and create
-     * the loader for best practice. Please note that 353 was chosen arbitrarily. You can use
-     * whatever number you like, so long as it is unique and consistent.
-     */
+
     private static final int ID_DETAIL_LOADER = 353;
 
     /* A summary of the forecast that can be shared by clicking the share button in the ActionBar */
@@ -162,13 +152,7 @@ public class DetailActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Uses the ShareCompat Intent builder to create our Forecast intent for sharing.  All we need
-     * to do is set the type, text and the NEW_DOCUMENT flag so it treats our share as a new task.
-     * See: http://developer.android.com/guide/components/tasks-and-back-stack.html for more info.
-     *
-     * @return the Intent to use to share our weather forecast
-     */
+
     private Intent createShareForecastIntent() {
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
@@ -245,7 +229,7 @@ public class DetailActivity extends AppCompatActivity implements
         /* Read weather condition ID from the cursor (ID provided by Open Weather Map) */
         int weatherId = data.getInt(INDEX_WEATHER_CONDITION_ID);
         /* Use our utility method to determine the resource ID for the proper art */
-        int weatherImageId = SunshineWeatherUtils.getLargeArtResourceIdForWeatherCondition(weatherId);
+        int weatherImageId = WeatherUtils.getLargeArtResourceIdForWeatherCondition(weatherId);
 
         /* Set the resource ID on the icon to display the art */
         mDetailBinding.primaryInfo.weatherIcon.setImageResource(weatherImageId);
@@ -253,17 +237,9 @@ public class DetailActivity extends AppCompatActivity implements
         /****************
          * Weather Date *
          ****************/
-        /*
-         * Read the date from the cursor. It is important to note that the date from the cursor
-         * is the same date from the weather SQL table. The date that is stored is a GMT
-         * representation at midnight of the date when the weather information was loaded for.
-         *
-         * When displaying this date, one must add the GMT offset (in milliseconds) to acquire
-         * the date representation for the local date in local time.
-         * SunshineDateUtils#getFriendlyDateString takes care of this for us.
-         */
+
         long localDateMidnightGmt = data.getLong(INDEX_WEATHER_DATE);
-        String dateText = SunshineDateUtils.getFriendlyDateString(this, localDateMidnightGmt, true);
+        String dateText = WeatherDateUtils.getFriendlyDateString(this, localDateMidnightGmt, true);
 
         mDetailBinding.primaryInfo.date.setText(dateText);
 
@@ -271,7 +247,7 @@ public class DetailActivity extends AppCompatActivity implements
          * Weather Description *
          ***********************/
         /* Use the weatherId to obtain the proper description */
-        String description = SunshineWeatherUtils.getStringForWeatherCondition(this, weatherId);
+        String description = WeatherUtils.getStringForWeatherCondition(this, weatherId);
 
         /* Create the accessibility (a11y) String from the weather description */
         String descriptionA11y = getString(R.string.a11y_forecast, description);
@@ -293,7 +269,7 @@ public class DetailActivity extends AppCompatActivity implements
          * the temperature. This method will also append either °C or °F to the temperature
          * String.
          */
-        String highString = SunshineWeatherUtils.formatTemperature(this, highInCelsius);
+        String highString = WeatherUtils.formatTemperature(this, highInCelsius);
 
         /* Create the accessibility (a11y) String from the weather description */
         String highA11y = getString(R.string.a11y_high_temp, highString);
@@ -312,7 +288,7 @@ public class DetailActivity extends AppCompatActivity implements
          * the temperature. This method will also append either °C or °F to the temperature
          * String.
          */
-        String lowString = SunshineWeatherUtils.formatTemperature(this, lowInCelsius);
+        String lowString = WeatherUtils.formatTemperature(this, lowInCelsius);
 
         String lowA11y = getString(R.string.a11y_low_temp, lowString);
 
@@ -341,7 +317,7 @@ public class DetailActivity extends AppCompatActivity implements
         /* Read wind speed (in MPH) and direction (in compass degrees) from the cursor  */
         float windSpeed = data.getFloat(INDEX_WEATHER_WIND_SPEED);
         float windDirection = data.getFloat(INDEX_WEATHER_DEGREES);
-        String windString = SunshineWeatherUtils.getFormattedWind(this, windSpeed, windDirection);
+        String windString = WeatherUtils.getFormattedWind(this, windSpeed, windDirection);
 
         String windA11y = getString(R.string.a11y_wind, windString);
 
@@ -359,7 +335,7 @@ public class DetailActivity extends AppCompatActivity implements
 
         /*
          * Format the pressure text using string resources. The reason we directly access
-         * resources using getString rather than using a method from SunshineWeatherUtils as
+         * resources using getString rather than using a method from WeatherUtils as
          * we have for other data displayed in this Activity is because there is no
          * additional logic that needs to be considered in order to properly display the
          * pressure.

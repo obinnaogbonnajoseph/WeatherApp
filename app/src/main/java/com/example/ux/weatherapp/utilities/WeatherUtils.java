@@ -19,16 +19,16 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.ux.weatherapp.R;
-import com.example.ux.weatherapp.data.SunshinePreferences;
+import com.example.ux.weatherapp.data.WeatherPreferences;
 
 /**
  * Contains useful utilities for a weather app, such as conversion between Celsius and Fahrenheit,
  * from kph to mph, and from degrees to NSEW.  It also contains the mapping of weather condition
  * codes in OpenWeatherMap to strings.  These strings are contained
  */
-public final class SunshineWeatherUtils {
+public final class WeatherUtils {
 
-    private static final String LOG_TAG = SunshineWeatherUtils.class.getSimpleName();
+    private static final String LOG_TAG = WeatherUtils.class.getSimpleName();
 
     /**
      * This method will convert a temperature from Celsius to Fahrenheit.
@@ -55,7 +55,7 @@ public final class SunshineWeatherUtils {
      * "21°"
      */
     public static String formatTemperature(Context context, double temperature) {
-        if (!SunshinePreferences.isMetric(context)) {
+        if (!WeatherPreferences.isMetric(context)) {
             temperature = celsiusToFahrenheit(temperature);
         }
 
@@ -100,7 +100,7 @@ public final class SunshineWeatherUtils {
     public static String getFormattedWind(Context context, float windSpeed, float degrees) {
         int windFormat = R.string.format_wind_kmh;
 
-        if (!SunshinePreferences.isMetric(context)) {
+        if (!WeatherPreferences.isMetric(context)) {
             windFormat = R.string.format_wind_mph;
             windSpeed = .621371192237334f * windSpeed;
         }

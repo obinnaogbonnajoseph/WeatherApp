@@ -29,9 +29,9 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class for handling date conversions that are useful for Sunshine.
+ * Class for handling date conversions that are useful for Weather App.
  */
-public final class SunshineDateUtils {
+public final class WeatherDateUtils {
 
     /* Milliseconds in a day */
     public static final long DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1);
@@ -116,7 +116,7 @@ public final class SunshineDateUtils {
     /**
      * Normalizes a date (in milliseconds).
      *
-     * Normalize, in our usage within Sunshine means to convert a given date in milliseconds to
+     * This means to convert a given date in milliseconds to
      * the very beginning of the date in UTC time.
      *
      *   For example, given the time representing
