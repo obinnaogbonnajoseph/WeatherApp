@@ -8,18 +8,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_marginTop="96dp"
     tools:context="com.example.ux.weatherapp.SplashScreenActivity">
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="310dp"
-        android:layout_height="273dp"
+        android:layout_width="299dp"
+        android:layout_height="244dp"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:src="@drawable/apple_lg"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="1dp" />
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="11dp" />
 
     <TextView
         android:id="@+id/text"
@@ -27,14 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:text="AppleWeather"
         android:fontFamily="@font/raleway_bold"
-        android:textStyle="bold"
+        android:text="AppleWeather"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="309dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="309dp" />
 
 
 </LinearLayout>
