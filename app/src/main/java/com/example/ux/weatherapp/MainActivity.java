@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -37,6 +38,8 @@ import android.widget.ProgressBar;
 import com.example.ux.weatherapp.data.SunshinePreferences;
 import com.example.ux.weatherapp.data.WeatherContract;
 import com.example.ux.weatherapp.sync.SunshineSyncUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements
     private ForecastAdapter mForecastAdapter;
     private RecyclerView mRecyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
+    private FirebaseAuth auth;
 
     private ProgressBar mLoadingIndicator;
 
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
         getSupportActionBar().setElevation(0f);
+
+        auth = FirebaseAuth.getInstance();
 
         /*
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
@@ -155,7 +161,22 @@ public class MainActivity extends AppCompatActivity implements
         getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
 
         SunshineSyncUtils.initialize(this);
+    }
 
+    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null){
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+
+        }
+    };
+
+    public void signOut(){
+        auth.signOut();
     }
 
     /**
@@ -343,6 +364,31 @@ public class MainActivity extends AppCompatActivity implements
             return true;
         }
 
+        if(id == R.id.sign_out) {
+            signOut();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        auth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if (authStateListener != null){
+            auth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mLoadingIndicator.setVisibility(View.GONE);
     }
 }
