@@ -24,11 +24,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.example.ux.weatherapp.utilities.SunshineDateUtils;
+import com.example.ux.weatherapp.utilities.WeatherDateUtils;
 
 
 /**
- * This class serves as the ContentProvider for all of Sunshine's data. This class allows us to
+ * This class serves as the ContentProvider for all of Weather App's data. This class allows us to
  * bulkInsert data, query data, and delete data.
  * <p>
  * Although ContentProvider implementation requires the implementation of additional methods to
@@ -87,11 +87,9 @@ public class WeatherProvider extends ContentProvider {
          * they aren't going to change. In Sunshine, we use CODE_WEATHER or CODE_WEATHER_WITH_DATE.
          */
 
-        /* This URI is content://com.example.android.sunshine/weather/ */
         matcher.addURI(authority, WeatherContract.PATH_WEATHER, CODE_WEATHER);
 
         /*
-         * This URI would look something like content://com.example.android.sunshine/weather/1472214172
          * The "/#" signifies to the UriMatcher that if PATH_WEATHER is followed by ANY number,
          * that it should return the CODE_WEATHER_WITH_DATE code
          */
@@ -127,7 +125,7 @@ public class WeatherProvider extends ContentProvider {
     }
 
     /**
-     * Handles requests to insert a set of new rows. In Sunshine, we are only going to be
+     * Handles requests to insert a set of new rows. We are only going to be
      * inserting multiple rows of data at a time from a weather forecast. There is no use case
      * for inserting a single row of data into our ContentProvider, and so we are only going to
      * implement bulkInsert. In a normal ContentProvider's implementation, you will probably want
@@ -152,7 +150,7 @@ public class WeatherProvider extends ContentProvider {
                     for (ContentValues value : values) {
                         long weatherDate =
                                 value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
-                        if (!SunshineDateUtils.isDateNormalized(weatherDate)) {
+                        if (!WeatherDateUtils.isDateNormalized(weatherDate)) {
                             throw new IllegalArgumentException("Date must be normalized to insert");
                         }
 
@@ -178,7 +176,7 @@ public class WeatherProvider extends ContentProvider {
     }
 
     /**
-     * Handles query requests from clients. We will use this method in Sunshine to query for all
+     * Handles query requests from clients. We will use this method in to query for all
      * of our weather data as well as to query for the weather on a particular day.
      *
      * @param uri           The URI to query
@@ -206,8 +204,6 @@ public class WeatherProvider extends ContentProvider {
 
             /*
              * When sUriMatcher's match method is called with a URI that looks something like this
-             *
-             *      content://com.example.android.sunshine/weather/1472214172
              *
              * sUriMatcher's match method will return the code that indicates to us that we need
              * to return the weather for a particular date. The date in this code is encoded in
@@ -263,10 +259,6 @@ public class WeatherProvider extends ContentProvider {
             }
 
             /*
-             * When sUriMatcher's match method is called with a URI that looks EXACTLY like this
-             *
-             *      content://com.example.android.sunshine/weather/
-             *
              * sUriMatcher's match method will return the code that indicates to us that we need
              * to return all of the weather in our weather table.
              *
@@ -340,40 +332,30 @@ public class WeatherProvider extends ContentProvider {
     }
 
     /**
-     * In Sunshine, we aren't going to do anything with this method. However, we are required to
-     * override it as WeatherProvider extends ContentProvider and getType is an abstract method in
-     * ContentProvider. Normally, this method handles requests for the MIME type of the data at the
-     * given URI. For example, if your app provided images at a particular URI, then you would
-     * return an image URI from this method.
-     *
+
      * @param uri the URI to query.
-     * @return nothing in Sunshine, but normally a MIME type string, or null if there is no type.
+     * @return nothing, but normally a MIME type string, or null if there is no type.
      */
     @Override
     public String getType(@NonNull Uri uri) {
-        throw new RuntimeException("We are not implementing getType in Sunshine.");
+        throw new RuntimeException("We are not implementing getType.");
     }
 
     /**
-     * In Sunshine, we aren't going to do anything with this method. However, we are required to
-     * override it as WeatherProvider extends ContentProvider and insert is an abstract method in
-     * ContentProvider. Rather than the single insert method, we are only going to implement
-     * {@link WeatherProvider#bulkInsert}.
-     *
      * @param uri    The URI of the insertion request. This must not be null.
      * @param values A set of column_name/value pairs to add to the database.
      *               This must not be null
-     * @return nothing in Sunshine, but normally the URI for the newly inserted item.
+     * @return the URI for the newly inserted item.
      */
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         throw new RuntimeException(
-                "We are not implementing insert in Sunshine. Use bulkInsert instead");
+                "We are not implementing insert. Use bulkInsert instead");
     }
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        throw new RuntimeException("We are not implementing update in Sunshine");
+        throw new RuntimeException("We are not implementing update");
     }
 
     /**

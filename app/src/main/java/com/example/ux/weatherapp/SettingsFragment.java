@@ -24,12 +24,12 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 
-import com.example.ux.weatherapp.data.SunshinePreferences;
+import com.example.ux.weatherapp.data.WeatherPreferences;
 import com.example.ux.weatherapp.data.WeatherContract;
-import com.example.ux.weatherapp.sync.SunshineSyncUtils;
+import com.example.ux.weatherapp.sync.WeatherSyncUtils;
 
 /**
- * The SettingsFragment serves as the display for all of the user's settings. In Sunshine, the
+ * The SettingsFragment serves as the display for all of the user's settings. In Weather app, the
  * user will be able to change their preference for units of measurement from metric to imperial,
  * set their preferred weather location, and indicate whether or not they'd like to see
  * notifications.
@@ -97,8 +97,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (key.equals(getString(R.string.pref_location_key))) {
             // we've changed the location
             // Wipe out any potential PlacePicker latlng values so that we can use this text entry.
-            SunshinePreferences.resetLocationCoordinates(activity);
-            SunshineSyncUtils.startImmediateSync(activity);
+            WeatherPreferences.resetLocationCoordinates(activity);
+            WeatherSyncUtils.startImmediateSync(activity);
         } else if (key.equals(getString(R.string.pref_units_key))) {
             // units have changed. update lists of weather entries accordingly
             activity.getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);

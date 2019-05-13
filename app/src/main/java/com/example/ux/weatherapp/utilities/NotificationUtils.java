@@ -15,7 +15,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.example.ux.weatherapp.DetailActivity;
 import com.example.ux.weatherapp.R;
-import com.example.ux.weatherapp.data.SunshinePreferences;
+import com.example.ux.weatherapp.data.WeatherPreferences;
 import com.example.ux.weatherapp.data.WeatherContract;
 
 public class NotificationUtils {
@@ -55,7 +55,7 @@ public class NotificationUtils {
 
         /* Build the URI for today's weather in order to show up to date data in notification */
         Uri todaysWeatherUri = WeatherContract.WeatherEntry
-                .buildWeatherUriWithDate(SunshineDateUtils.normalizeDate(System.currentTimeMillis()));
+                .buildWeatherUriWithDate(WeatherDateUtils.normalizeDate(System.currentTimeMillis()));
 
         /*
          * The MAIN_FORECAST_PROJECTION array passed in as the second parameter is defined in our WeatherContract
@@ -80,7 +80,7 @@ public class NotificationUtils {
             double low = todayWeatherCursor.getDouble(INDEX_MIN_TEMP);
 
             Resources resources = context.getResources();
-            int largeArtResourceId = SunshineWeatherUtils
+            int largeArtResourceId = WeatherUtils
                     .getLargeArtResourceIdForWeatherCondition(weatherId);
 
             Bitmap largeIcon = BitmapFactory.decodeResource(
@@ -92,7 +92,7 @@ public class NotificationUtils {
             String notificationText = getNotificationText(context, weatherId, high, low);
 
             /* getSmallArtResourceIdForWeatherCondition returns the proper art to show given an ID */
-            int smallArtResourceId = SunshineWeatherUtils
+            int smallArtResourceId = WeatherUtils
                     .getSmallArtResourceIdForWeatherCondition(weatherId);
 
             /*
@@ -111,8 +111,7 @@ public class NotificationUtils {
                     .setAutoCancel(true);
 
             /*
-             * This Intent will be triggered when the user clicks the notification. In our case,
-             * we want to open Sunshine to the DetailActivity to display the newly updated weather.
+             * This Intent will be triggered when the user clicks the notification.
              */
             Intent detailIntentForToday = new Intent(context, DetailActivity.class);
             detailIntentForToday.setData(todaysWeatherUri);
@@ -134,7 +133,7 @@ public class NotificationUtils {
              * Since we just showed a notification, save the current time. That way, we can check
              * next time the weather is refreshed if we should show another notification.
              */
-            SunshinePreferences.saveLastNotificationTime(context, System.currentTimeMillis());
+            WeatherPreferences.saveLastNotificationTime(context, System.currentTimeMillis());
         }
 
         /* Always close your cursor when you're done with it to avoid wasting resources. */
@@ -162,7 +161,7 @@ public class NotificationUtils {
          * Short description of the weather, as provided by the API.
          * e.g "clear" vs "sky is clear".
          */
-        String shortDescription = SunshineWeatherUtils
+        String shortDescription = WeatherUtils
                 .getStringForWeatherCondition(context, weatherId);
 
         String notificationFormat = context.getString(R.string.format_notification);
@@ -170,8 +169,8 @@ public class NotificationUtils {
         /* Using String's format method, we create the forecast summary */
         String notificationText = String.format(notificationFormat,
                 shortDescription,
-                SunshineWeatherUtils.formatTemperature(context, high),
-                SunshineWeatherUtils.formatTemperature(context, low));
+                WeatherUtils.formatTemperature(context, high),
+                WeatherUtils.formatTemperature(context, low));
 
         return notificationText;
     }

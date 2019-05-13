@@ -37,12 +37,6 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
      * If you change the database schema, you must increment the database version or the onUpgrade
      * method will not be called.
      *
-     * The reason DATABASE_VERSION starts at 3 is because Sunshine has been used in conjunction
-     * with the Android course for a while now. Believe it or not, older versions of Sunshine
-     * still exist out in the wild. If we started this DATABASE_VERSION off at 1, upgrading older
-     * versions of Sunshine could cause everything to break. Although that is certainly a rare
-     * use-case, we wanted to watch out for it and warn you what could happen if you mistakenly
-     * version your databases.
      */
     private static final int DATABASE_VERSION = 3;
 

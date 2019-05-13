@@ -24,7 +24,7 @@ import com.firebase.jobdispatcher.JobService;
 import com.firebase.jobdispatcher.RetryStrategy;
 
 
-public class SunshineFirebaseJobService extends JobService {
+public class WeatherFirebaseJobService extends JobService {
 
     private AsyncTask<Void, Void, Void> mFetchWeatherTask;
 
@@ -45,7 +45,7 @@ public class SunshineFirebaseJobService extends JobService {
             @Override
             protected Void doInBackground(Void... voids) {
                 Context context = getApplicationContext();
-                SunshineSyncTask.syncWeather(context);
+                WeatherSyncTask.syncWeather(context);
                 jobFinished(jobParameters, false);
                 return null;
             }

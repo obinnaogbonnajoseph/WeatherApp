@@ -19,16 +19,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ux.weatherapp.data.SunshinePreferences;
-import com.example.ux.weatherapp.utilities.SunshineDateUtils;
-import com.example.ux.weatherapp.utilities.SunshineWeatherUtils;
+import com.example.ux.weatherapp.data.WeatherPreferences;
+import com.example.ux.weatherapp.utilities.WeatherDateUtils;
+import com.example.ux.weatherapp.utilities.WeatherUtils;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
@@ -144,12 +143,12 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         switch (viewType) {
 
             case VIEW_TYPE_TODAY:
-                weatherImageId = SunshineWeatherUtils
+                weatherImageId = WeatherUtils
                         .getLargeArtResourceIdForWeatherCondition(weatherId);
                 break;
 
             case VIEW_TYPE_FUTURE_DAY:
-                weatherImageId = SunshineWeatherUtils
+                weatherImageId = WeatherUtils
                         .getSmallArtResourceIdForWeatherCondition(weatherId);
                 break;
 
@@ -165,21 +164,21 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
          /* Read date from the cursor */
         long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
          /* Get human readable string using our utility method */
-        String dateString = SunshineDateUtils.getFriendlyDateString(mContext, dateInMillis, false);
+        String dateString = WeatherDateUtils.getFriendlyDateString(mContext, dateInMillis, false);
 
          /* Display friendly date string */
         forecastAdapterViewHolder.dateView.setText(dateString);
 
         /* Display current location */
         if(viewType == VIEW_TYPE_TODAY) {
-            String cityName = SunshinePreferences.getPreferredWeatherLocationName(mContext);
+            String cityName = WeatherPreferences.getPreferredWeatherLocationName(mContext);
             forecastAdapterViewHolder.locationView.setText(cityName);
         }
 
         /***********************
          * Weather Description *
          ***********************/
-        String description = SunshineWeatherUtils.getStringForWeatherCondition(mContext, weatherId);
+        String description = WeatherUtils.getStringForWeatherCondition(mContext, weatherId);
          /* Create the accessibility (a11y) String from the weather description */
         String descriptionA11y = mContext.getString(R.string.a11y_forecast, description);
 
@@ -197,7 +196,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
           * the temperature. This method will also append either °C or °F to the temperature
           * String.
           */
-        String highString = SunshineWeatherUtils.formatTemperature(mContext, highInCelsius);
+        String highString = WeatherUtils.formatTemperature(mContext, highInCelsius);
          /* Create the accessibility (a11y) String from the weather description */
         String highA11y = mContext.getString(R.string.a11y_high_temp, highString);
 
@@ -215,7 +214,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
           * the temperature. This method will also append either °C or °F to the temperature
           * String.
           */
-        String lowString = SunshineWeatherUtils.formatTemperature(mContext, lowInCelsius);
+        String lowString = WeatherUtils.formatTemperature(mContext, lowInCelsius);
         String lowA11y = mContext.getString(R.string.a11y_low_temp, lowString);
 
          /* Set the text and content description (for accessibility purposes) */
@@ -238,7 +237,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     /**
      * Returns an integer code related to the type of View we want the ViewHolder to be at a given
      * position. This method is useful when we want to use different layouts for different items
-     * depending on their position. In Sunshine, we take advantage of this method to provide a
+     * depending on their position. In Weather app, we take advantage of this method to provide a
      * different layout for the "today" layout. The "today" layout is only shown in portrait mode
      * with the first item in the list.
      *

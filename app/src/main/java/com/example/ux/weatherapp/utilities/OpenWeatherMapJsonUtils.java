@@ -3,7 +3,7 @@ package com.example.ux.weatherapp.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.example.ux.weatherapp.data.SunshinePreferences;
+import com.example.ux.weatherapp.data.WeatherPreferences;
 import com.example.ux.weatherapp.data.WeatherContract;
 
 import org.json.JSONArray;
@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Utility functions to handle OpenWeatherMap JSON data.
@@ -89,7 +88,7 @@ public final class OpenWeatherMapJsonUtils {
         double cityLatitude = cityCoord.getDouble(OWM_LATITUDE);
         double cityLongitude = cityCoord.getDouble(OWM_LONGITUDE);
 
-        SunshinePreferences.setLocationDetails(context, cityLatitude, cityLongitude);
+        WeatherPreferences.setLocationDetails(context, cityLatitude, cityLongitude);
 
         ContentValues[] weatherContentValues = new ContentValues[5];
 
@@ -100,9 +99,9 @@ public final class OpenWeatherMapJsonUtils {
          * going to take advantage of that to get a nice normalized UTC date for all of our weather.
          */
 //        long now = System.currentTimeMillis();
-//        long normalizedUtcStartDay = SunshineDateUtils.normalizeDate(now);
+//        long normalizedUtcStartDay = WeatherDateUtils.normalizeDate(now);
 
-        long normalizedUtcStartDay = SunshineDateUtils.getNormalizedUtcDateForToday();
+        long normalizedUtcStartDay = WeatherDateUtils.getNormalizedUtcDateForToday();
         int dayNumber = 0;
 
         for (int i = 0; i < jsonWeatherArray.length(); i=i+8) {
@@ -124,7 +123,7 @@ public final class OpenWeatherMapJsonUtils {
              * We ignore all the datetime values embedded in the JSON and assume that
              * the values are returned in-order by day (which is not guaranteed to be correct).
              */
-            dateTimeMillis = normalizedUtcStartDay + SunshineDateUtils.DAY_IN_MILLIS * dayNumber;
+            dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS * dayNumber;
 
             // Returned object:
             // dt: long

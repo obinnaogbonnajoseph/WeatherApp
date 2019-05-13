@@ -11,10 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.ux.weatherapp.data.SunshinePreferences;
+import com.example.ux.weatherapp.data.WeatherPreferences;
 import com.example.ux.weatherapp.search.City;
 import com.example.ux.weatherapp.search.SearchAdapter;
-import com.example.ux.weatherapp.sync.SunshineSyncUtils;
+import com.example.ux.weatherapp.sync.WeatherSyncUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,15 +72,15 @@ public class LocationSettingActivity extends AppCompatActivity implements
         if (key.equals(getString(R.string.pref_location_key))) {
             // we've changed the location
             // Wipe out any potential PlacePicker latlng values so that we can use this text entry.
-            SunshinePreferences.resetLocationCoordinates(getApplicationContext());
-            SunshineSyncUtils.startImmediateSync(getApplicationContext());
+            WeatherPreferences.resetLocationCoordinates(getApplicationContext());
+            WeatherSyncUtils.startImmediateSync(getApplicationContext());
         }
     }
 
     @Override
     public void onClick(String cityId, String cityName) {
-        SunshinePreferences.setPrefCityId(this, cityId, cityName);
-        SunshineSyncUtils.startImmediateSync(this);
+        WeatherPreferences.setPrefCityId(this, cityId, cityName);
+        WeatherSyncUtils.startImmediateSync(this);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

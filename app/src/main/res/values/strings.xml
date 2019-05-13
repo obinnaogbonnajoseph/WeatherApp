@@ -64,7 +64,7 @@
 
 
     <!-- - - - - - - - - - - - - - - -
-      - Used by SunshinePreferences  -
+      - UsedWeatherPreferencesnces  -
       - - - - - - - - - - - - - - - -->
 
     <!-- Label for the location preference -->
@@ -116,7 +116,7 @@
     <string name="api_key">337e05a2d670323162bb0570b3aea62f</string>
 
     <!-- - - - - - - - - - - - - - -
-      - Used by SunshineDateUtils  -
+      - UsedWeatherDateUtilstils  -
       - - - - - - - - - - - - - - -->
 
     <!-- For labelling today's forecast -->
@@ -132,7 +132,7 @@
 
 
     <!-- - - - - - - - - - - - - - - - -
-      - Used by SunshineWeatherUtils   -
+      - UsedWeatherUtilstils   -
       - - - - - - - - - - - - - - - - -->
 
     <!-- Temperature format -->
