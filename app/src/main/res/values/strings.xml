@@ -247,4 +247,12 @@
     <!-- Refresh string -->
     <string name="menu_refresh">Refresh</string>
 
+    <!-- onboarding -->
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="welcome_intro1">Welcome to Apple Weather</string>
+    <string name="welcome_intro2">Here you can select a city of your choice</string>
+    <string name="welcome_intro3">You can view the weather forecast of the selected city</string>
+    <string name="welcome_intro4">Let\'s get started by logging in or signing up if you don\'t have an account. </string>
 </resources>

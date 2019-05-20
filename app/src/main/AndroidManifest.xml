@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ux.weatherapp">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -16,8 +17,7 @@
         android:theme="@style/AppTheme">
 
         <!-- Login Activity -->
-        <activity
-            android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
 
         <!-- The manifest entry for our MainActivity. Each Activity requires a manifest entry -->
         <activity
@@ -40,7 +40,7 @@
         <!-- The manifest entry for our SettingsActivity. Each Activity requires a manifest entry -->
         <activity
             android:name=".SettingsActivity"
-            android:noHistory="true"/>
+            android:noHistory="true" />
 
         <!-- Our ContentProvider -->
         <provider
@@ -66,15 +66,16 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".SplashScreenActivity"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity
             android:name=".LocationSettingActivity"
             android:noHistory="true"
@@ -82,9 +83,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
+        <activity android:name=".OnBoardingActivity"></activity>
     </application>
 
 </manifest>
