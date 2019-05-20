@@ -244,6 +244,9 @@
     <!-- Search hint -->
     <string name="search_hint">Search cities</string>
 
+    <!-- Refresh string -->
+    <string name="menu_refresh">Refresh</string>
+
     <!-- onboarding -->
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
